@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#070b10" />
+  <title>Koşul Fabrikası · if / elif / else</title>
+  <script type="module" crossorigin src="./assets/index-ptBLLlKv.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-D0wuEMKU.css">
+</head>
+<body>
+  <header id="hud">
+    <div class="marka">
+      <div class="logo">if</div>
+      <div class="marka-yazi">
+        <b>KOŞUL FABRİKASI</b>
+        <span>PYTHON · IF / ELIF / ELSE · 9. HAFTA</span>
+      </div>
+    </div>
+
+    <div class="bolum-bilgi">
+      <span id="bolge-etiket">BÖLGE I</span>
+      <b id="bolum-ad">Yükleniyor…</b>
+      <i id="bolum-sayac">01 / 24</i>
+    </div>
+
+    <div class="hud-sag">
+      <div class="yildiz-toplam" id="yildiz-toplam" title="Toplam yıldız">★ 0</div>
+      <button class="mini" data-act="harita">BÖLÜMLER</button>
+      <button class="mini" data-act="yardim" title="Nasıl oynanır?">?</button>
+    </div>
+  </header>
+
+  <main id="sahne"></main>
+
+  <section id="panel">
+    <div class="panel-ust">
+      <div class="senaryo">
+        <span id="mod-etiket" class="mod">KUR</span>
+        <p id="senaryo"></p>
+      </div>
+      <div class="ilerleme">
+        <div class="bar"><i id="ilerleme-bar"></i></div>
+        <span id="ilerleme-yazi">0 / 24</span>
+      </div>
+    </div>
+
+    <div class="panel-govde">
+      <div class="kural-kutu">
+        <div class="kutu-baslik">
+          <b>KARAR MAKİNESİ</b>
+          <span id="kural-sayac"></span>
+        </div>
+        <div id="kurallar" class="kurallar"></div>
+        <button class="ekle" data-act="ekle" id="ekle-btn">+ elif ekle</button>
+      </div>
+
+      <aside class="kod-kutu">
+        <div class="kutu-baslik"><b>PYTHON</b><span id="kod-rozet">canlı</span></div>
+        <pre id="kod"></pre>
+        <small id="kod-not"></small>
+      </aside>
+    </div>
+
+    <div class="panel-alt">
+      <button class="btn buyuk" data-act="calistir" id="calistir-btn">▶ BANDI ÇALIŞTIR</button>
+      <button class="btn sade" data-act="sifirla">↺ Kuralları sıfırla</button>
+      <button class="btn sade" data-act="hiz" id="hiz-btn">1× hız</button>
+      <div class="ipucu-alan">
+        <span id="durum"></span>
+        <button class="ipucu-btn" data-act="ipucu">İpucu</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="toast"></div>
+  <div id="overlay" class="overlay"></div>
+
+</body>
+</html>
