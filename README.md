@@ -45,4 +45,15 @@ bun run build   # dist/
 ```
 
 Statik çıktı `dist/` içindedir; harici CDN yoktur (okulda çevrimdışı çalışır).
-`.github/workflows/pages.yml` hazırdır: `main` dalına push edince GitHub Pages yayınlanır.
+
+## Yayın
+
+Oyun GitHub Pages'te yayında: <https://bilfen.github.io/kosul-fabrikasi/>
+
+Pages, `gh-pages` dalından yayınlanır (kaynak: `gh-pages` · `/`). Güncelleme için:
+
+```bash
+bun run build
+git add -A && git commit -m "..." && git push origin main
+# dist/ içeriğini gh-pages dalına gönder
+```
