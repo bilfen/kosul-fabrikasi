@@ -194,7 +194,11 @@ function satirHTML(r, i) {
   const b = bolum();
   const kilit = b.mod === 'sirala';
   const ilk = i === 0;
-  const hedefSec = `<select data-hedef ${kilit ? '' : ''} class="hedef-sec">
+  const son = i === S.kurallar.length - 1;
+  const elseKomsu = r.tip === 'else'
+    || S.kurallar[i - 1]?.tip === 'else'
+    || S.kurallar[i + 1]?.tip === 'else';
+  const hedefSec = `<select data-hedef class="hedef-sec"${kilit ? ' disabled' : ''}>
     ${b.hedefler.map((h, j) => `<option value="${j}"${r.hedef === j ? ' selected' : ''}>${h.ad}</option>`).join('')}
   </select>`;
 
@@ -238,15 +242,26 @@ function satirHTML(r, i) {
     <span class="ok">→</span>
     ${hedefSec}
     <span class="tuslar">
-      <button data-yukari title="Yukarı" ${ilk ? 'disabled' : ''}>↑</button>
-      <button data-asagi title="Aşağı" ${i === S.kurallar.length - 1 ? 'disabled' : ''}>↓</button>
+      <button data-yukari title="Yukarı" ${ilk || elseKomsu ? 'disabled' : ''}>↑</button>
+      <button data-asagi title="Aşağı" ${son || elseKomsu ? 'disabled' : ''}>↓</button>
       ${kilit ? '' : '<button data-sil title="Satırı sil" class="sil">✕</button>'}
     </span>
   </div>`;
 }
 
+/* Satır tiplerini Python kurallarına uydur: ilk satır if, arasındakiler elif,
+   else daima en sonda. Sıralama değişince eski tipler kaymaz. */
+function tipleriDuzelt() {
+  const elseler = S.kurallar.filter((r) => r.tip === 'else');
+  S.kurallar = S.kurallar.filter((r) => r.tip !== 'else').concat(elseler);
+  S.kurallar.forEach((r, i) => {
+    if (r.tip !== 'else') r.tip = i === 0 ? 'if' : 'elif';
+  });
+}
+
 function kurallariCiz() {
   const b = bolum();
+  tipleriDuzelt();
   kurallarEl.innerHTML = S.kurallar.map(satirHTML).join('');
   $('kural-sayac').textContent = `${S.kurallar.length} / ${b.maksSatir || 5} satır`;
 }
@@ -322,6 +337,7 @@ kurallarEl.addEventListener('click', (e) => {
   if (b.mod === 'sirala' && (e.target.dataset.sil !== undefined)) return;
 
   if (e.target.closest('[data-yukari]') && i > 0) {
+    if (S.kurallar[i].tip === 'else' || S.kurallar[i - 1].tip === 'else') return;
     [S.kurallar[i - 1], S.kurallar[i]] = [S.kurallar[i], S.kurallar[i - 1]];
     kurallariCiz(); pythonCiz(); plakaGuncelle();
   }
@@ -667,7 +683,7 @@ document.addEventListener('click', (e) => {
       $('hiz-btn').textContent = S.hiz === 1 ? '1× hız' : '2× hız';
       break;
     case 'sonraki': modalKapat(); bolumYukle(S.i + 1); break;
-    case 'tekrar': modalKapat(); S.deneme = 0; ciz(); break;
+    case 'tekrar': modalKapat(); ciz(); break;
     case 'duzelt': modalKapat(); break;
     case 'bolum':
       modalKapat();
